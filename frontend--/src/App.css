@@ -38,7 +38,6 @@ nav a {
   text-decoration: none;
   padding: 15px;
 }
-
 .top {
   height: 80.5%;
   position: relative;
@@ -86,7 +85,6 @@ footer {
   line-height: 20px;
   font-size: 20px;
 }
-
 .row {
   width: 100%;
   margin: auto;
@@ -162,12 +160,10 @@ form {
   white-space: nowrap;
   cursor: pointer;
 }
-
 .btn:active,
 .btn:hover {
   outline: 0;
 }
-
 .btn span {
   background-color: rgb(25, 25, 26);
   padding: 16px 10px;
@@ -176,7 +172,6 @@ form {
   height: 100%;
   transition: .5s;
 }
-
 .btn:hover span {
   background: none;
 }
