@@ -73,12 +73,16 @@ h1{
   }
 }
 
+    
+
+
+
 footer {
   background: url('assets/footer-img.jpg');
   background-position: 1px;
   height: 30rem;
   width: 100%;
-  position: absolute;
+  position: relative;
   bottom: 0;
   padding: 0px;
   color: #000000;
