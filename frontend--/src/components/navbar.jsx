@@ -16,7 +16,7 @@ function NavBar() {
         </nav>
 
         <div className="top">
-            <h1>arts decor</h1>
+            <h1>Decorer</h1>
         </div>
 
     </header>
