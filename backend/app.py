@@ -1,11 +1,15 @@
-from flask import Flask
-from __init__ import create_app, app
+from flask import Flask, render_template
+from __init__ import app, db
 from flask_restful import Api
-from flask_cors import CORS, cross_origin
-from __init__ import db
-import os
+from flask_cors import CORS
 
-app = create_app(os.getenv("CONFIG_MODE", "development"))
+
+app = Flask(__name__, static_url_path='', static_folder='frontend--')
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 api = Api(app)
 CORS(app)
  

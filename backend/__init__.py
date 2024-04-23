@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Api
 import os
 
 db = SQLAlchemy()
@@ -34,7 +34,7 @@ config = {
 
 
 def create_app(config_mode):
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='', static_folder='frontend--')
     app.config.from_object(config[config_mode])
     db.init_app(app)
     migrate.init_app(app, db)
