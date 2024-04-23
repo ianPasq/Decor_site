@@ -2,14 +2,17 @@ from flask import Flask, request, jsonify, session
 from __init__ import app 
 from flask_restful import Api, Resource
 from flask_bcrypt import Bcrypt
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = 'your_secret_key'
 bcrypt = Bcrypt(app)
 api = Api(app)
 
 class AuthRoutes():
     @app.route('/login', methods=['POST'])
+    @cross_origin
     def login():
         data = request.json
         username = data.get('username')
@@ -67,7 +70,12 @@ class AuthResource(Resource):
 api.add_resource(AuthResource, '/auth')
 
 
-users = {}
+users = {
+    'user': {
+        'password_hash': bcrypt.generate_password_hash('password').decode('utf-8'),
+        'id': 1
+    }
+}
 
 class RegisterResource(Resource):
     def post(self):
@@ -101,3 +109,6 @@ class LoginResource(Resource):
 
 api.add_resource(RegisterResource, '/register')
 api.add_resource(LoginResource, '/login')
+
+if __name__ == '__main__':
+    app.run(debug=True)
