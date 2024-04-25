@@ -12,9 +12,11 @@ api = Api(app)
 
 class AuthRoutes():
     @app.route('/login', methods=['POST'])
-    @cross_origin
     def login():
         data = request.json
+        if not data:
+            return jsonify(message='Missing JSON data'), 400
+        
         username = data.get('username')
         password = data.get('password')
         
@@ -23,10 +25,12 @@ class AuthRoutes():
             return jsonify(message='Login successful'), 200
         else:
             return jsonify(message='Login failed'), 401
-    @app.route('/logout', methods=['POST'])
+
+    @app.route('/logout', methods=['GET'])
     def logout():
         session.pop('username', None) 
         return jsonify(message='Logged out'), 200
+    
     @app.route('/protected', methods=['GET'])
     def protected():
         if 'username' in session:
