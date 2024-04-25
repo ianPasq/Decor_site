@@ -1,10 +1,10 @@
 from flask import Flask, request, jsonify, session
-from __init__ import app 
+from __init__ import create_app
 from flask_restful import Api, Resource
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS, cross_origin
 
-app = Flask(__name__)
+app = create_app('development')
 CORS(app)
 app.secret_key = 'your_secret_key'
 bcrypt = Bcrypt(app)

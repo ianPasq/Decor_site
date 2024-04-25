@@ -3,7 +3,7 @@ function NavBar() {
     <header>
         <nav>
             <div className="nav-btn">
-                <a class="active" href="#home">Home</a>
+                <a className="active" href="#home">Home</a>
                 <a href="#contact">Contact</a>
                 <a href="#about">About</a>
                 <a href="#category">Categories</a>

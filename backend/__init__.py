@@ -4,13 +4,11 @@ from flask_migrate import Migrate
 from flask_restful import Api
 import os
 
-db = SQLAlchemy()
-migrate = Migrate()
-api = Api()
+
 
 
 class Config:
-    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 class DevelopmentConfig(Config):
     DEVELOPMENT = True
     DEBUG = True
@@ -32,13 +30,16 @@ config = {
     "production": ProductionConfig
 }
 
+db = SQLAlchemy()
+migrate = Migrate()
+api = Api()
 
 def create_app(config_mode):
-    app = Flask(__name__, static_url_path='', static_folder='frontend--')
+    app = Flask(__name__)
     app.config.from_object(config[config_mode])
     db.init_app(app)
     migrate.init_app(app, db)
-    
+        
     app.secret_key = b'***************************************'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

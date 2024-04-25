@@ -1,38 +1,33 @@
-from flask import Flask, render_template
-from __init__ import app, db
-from flask_restful import Api
+from flask import Flask, render_template, jsonify
+from __init__ import create_app, db
 from flask_cors import CORS
 
 
-app = Flask(__name__, static_url_path='', static_folder='frontend--')
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-api = Api(app)
+app = create_app('development')
 CORS(app)
  
 class Main():
-    @app.route('/home')
+    @app.route('/home', methods=['POST'])
     def home():
-        return "helo" 
+        return "hello"
     
-    @app.route('/about')
+    @app.route('/about', methods=['POST'])
     def about():
-        return "helo"
+        return "hello"
 
-    @app.route('/contact')
+    @app.route('/contact', methods=['POST'])
     def contact():
         return "helo"
 
-    @app.route('/categories')
+    @app.route('/categories', methods=['POST'])
     def categories():
         return "helo"
     
 
 if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=3000)
     with app.app_context():
         db.create_all()
         
     app.run(debug=True)
+    
