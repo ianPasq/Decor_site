@@ -15,7 +15,12 @@ function About() {
             </div>
 
             <div className="show">
-                <h2>hello</h2>
+                <div>
+                    1 box
+                </div>
+                <div>
+                    2box
+                </div>
             </div>
         </section>
     )
