@@ -1,33 +1,60 @@
 function Footer() {
     return (
-        <footer>
-            <div className="row">
-                <div className="col">
-                    <h2>Contact Info</h2>
-                    <p>Email: bearsyker@gmail.com</p>
-                    <p>Phone: 1203912309124</p>
-                    <h2>Socials</h2>
+        <footer className="footer-distributed">
+                <div class="footer-left">
+
+                    <h3>DECOR<span>ands</span></h3>
+
+                    <p class="footer-links">
+                        <a href="#" class="link-1">Home</a>
+                        
+                        <a href="#">Categories</a>
+
+                        <a href="#">About</a>
+                        
+                        <a href="#">Contact</a>
+                    </p>
+
+                    <p class="footer-company-name">Company Name © 2024</p>
                 </div>
-                <div className="col form">
-                    <div className="tx">
-                        <h2>Contact Me</h2>
-                        <form action="#">
-                            <div class="email">
-                                <div class="text">email</div>
-                                <input type="email" required placeholder="your email"></input>
-                            </div>
-                            <div class="msg">
-                                <div class="text">message</div>
-                                <textarea name="name" rows="2" cols="25" required placeholder="send a message"></textarea>
-                            </div>
-                            <div>
-                                <button className="btn" type="submit"><span class="text">Submit</span></button>
-                            </div>
-                        </form>
+
+                <div class="footer-center">
+
+                    <div>
+                        <i class="fa fa-map-marker"></i>
+                        <p><span>street add</span> city and country </p>
                     </div>
+
+                    <div>
+                        <i class="fa fa-phone"></i>
+                        <p>n: 555.555.5555</p>
+                    </div>
+
+                    <div>
+                        <i class="fa fa-envelope"></i>
+                        <p><a href="mailto:support@company.com">bearsyker@gmail.com</a></p>
+                    </div>
+
                 </div>
-                
-            </div>
+
+                <div class="footer-right">
+
+                    <p class="footer-company-about">
+                        <span>About the company</span>
+                        Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor lacus vehicula sit amet.
+                    </p>
+
+                    <div class="footer-icons">
+
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                        <a href="#"><i class="fa fa-github"></i></a>
+
+                    </div>
+
+                </div>
+              
         </footer>
   )
 }

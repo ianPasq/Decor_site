@@ -29,8 +29,8 @@ def cart():
         'cart_contents': cart_items,
         'total_price': total_price,
     })
-@app.route('/add_to_cart', methods=['POST'])
-def add_to_cart():
+@app.route('/add_cart', methods=['POST'])
+def add_cart():
     data = request.get_json()
     item = data['item']
     quantity = data['quantity']
