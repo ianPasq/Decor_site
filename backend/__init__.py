@@ -5,8 +5,6 @@ from flask_restful import Api
 import os
 
 
-
-
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 class DevelopmentConfig(Config):

@@ -1,14 +1,13 @@
 from flask import Flask, request, jsonify, session
-from __init__ import create_app
+from __init__ import create_app, api
 from flask_restful import Api, Resource
-from flask_bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt, bcrypt
 from flask_cors import CORS, cross_origin
 
 app = create_app('development')
 CORS(app)
 app.secret_key = 'your_secret_key'
-bcrypt = Bcrypt(app)
-api = Api(app)
+
 
 class AuthRoutes():
     @app.route('/login', methods=['POST'])
@@ -113,6 +112,3 @@ class LoginResource(Resource):
 
 api.add_resource(RegisterResource, '/register')
 api.add_resource(LoginResource, '/login')
-
-if __name__ == '__main__':
-    app.run(debug=True)
