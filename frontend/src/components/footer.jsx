@@ -4,22 +4,18 @@ function Footer() {
                 <div class="footer-left">
 
                     <h3>DECOR<span>ands</span></h3>
-
                     <p class="footer-links">
                         <a href="#" class="link-1">Home</a>
-                        
                         <a href="#">Categories</a>
-
                         <a href="#">About</a>
-                        
                         <a href="#">Contact</a>
                     </p>
-
                     <p class="footer-company-name">Company Name © 2024</p>
+
                 </div>
 
                 <div class="footer-center">
-
+                    
                     <div>
                         <i class="fa fa-map-marker"></i>
                         <p><span>street add</span> city and country </p>

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify
-from __init__ import create_app, db
+from . import create_app, db
 from flask_cors import CORS
 
 
@@ -7,7 +7,7 @@ app = create_app('development')
 CORS(app)
  
 class Main():
-    @app.route('/home', methods=['POST'])
+    @app.route('/home', methods=['GET'])
     def home():
         return "hello"
     

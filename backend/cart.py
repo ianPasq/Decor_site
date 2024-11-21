@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from __init__ import create_app, db
+from . import create_app, db
 from models import Order, OrderItem, Product
 from datetime import datetime
 

@@ -1,114 +1,68 @@
 from flask import Flask, request, jsonify, session
 from __init__ import create_app, api
+from models import db, User
 from flask_restful import Api, Resource
-from flask_bcrypt import Bcrypt, bcrypt
+from flask_bcrypt import Bcrypt
 from flask_cors import CORS, cross_origin
+from werkzeug.security import generate_password_hash, check_password_hash
+import re
+
+app.config['SECRET_KEY'] = 'very-secret-key'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:passwordsafe@localhost/auth'
+ 
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+SQLALCHEMY_ECHO = True
+
 
 app = create_app('development')
+api = Api(app)
 CORS(app)
 app.secret_key = 'your_secret_key'
-
-
-class AuthRoutes():
-    @app.route('/login', methods=['POST'])
-    def login():
-        data = request.json
-        if not data:
-            return jsonify(message='Missing JSON data'), 400
+bcrypt = Bcrypt(app)
         
-        username = data.get('username')
-        password = data.get('password')
-        
-        if username == 'user' and password == 'password':
-            session['username'] = username  
-            return jsonify(message='Login successful'), 200
-        else:
-            return jsonify(message='Login failed'), 401
-
-    @app.route('/logout', methods=['GET'])
-    def logout():
-        session.pop('username', None) 
-        return jsonify(message='Logged out'), 200
-    
-    @app.route('/protected', methods=['GET'])
-    def protected():
-        if 'username' in session:
-            return jsonify(message='Protected data'), 200
-        else:
-            return jsonify(message='Unauthorized access'), 401
-        
-    
-users = {
-    'user': {
-        'password_hash': bcrypt.generate_password_hash('password').decode('utf-8'),
-        'id': 1
-    }
-}
-
-class AuthResource(Resource):
-    def post(self):
-        data = request.get_json()
-        username = data.get('username')
-        password = data.get('password')
-
-        if username in users and bcrypt.check_password_hash(users[username]['password_hash'], password):
-            session['user_id'] = users[username]['id']
-            return jsonify(message='Login successful'), 200
-        else:
-            return jsonify(message='Login failed'), 401
-
-    def delete(self):
-        if 'user_id' in session:
-            session.pop('user_id', None)
-            return jsonify(message='Logged out'), 200
-        else:
-            return jsonify(message='No active session'), 401
-
-    def get(self):
-        if 'user_id' in session:
-            return jsonify(message='Protected data'), 200
-        else:
-            return jsonify(message='Unauthorized access'), 401
-
-api.add_resource(AuthResource, '/auth')
 
 
-users = {
-    'user': {
-        'password_hash': bcrypt.generate_password_hash('password').decode('utf-8'),
-        'id': 1
-    }
-}
+@app.route("/signup", methods=["POST"])
+def signup():
+    email = request.json["email"]
+    password = request.json["password"]
+ 
+    user_exists = User.query.filter_by(email=email).first() is not None
+ 
+    if user_exists:
+        return jsonify({"error": "Email already exists"}), 409
+     
+    hashed_password = bcrypt.generate_password_hash(password)
+    new_user = User(email=email, password=hashed_password)
+    db.session.add(new_user)
+    db.session.commit()
+ 
+    session["user_id"] = new_user.id
+ 
+    return jsonify({
+        "id": new_user.id,
+        "email": new_user.email
+    })
+ 
+@app.route("/login", methods=["POST"])
+def login_user():
+    email = request.json["email"]
+    password = request.json["password"]
+  
+    user = User.query.filter_by(email=email).first()
+  
+    if user is None:
+        return jsonify({"error": "Unauthorized Access"}), 401
+  
+    if not bcrypt.check_password_hash(user.password, password):
+        return jsonify({"error": "Unauthorized"}), 401
+      
+    session["user_id"] = user.id
+  
+    return jsonify({
+        "id": user.id,
+        "email": user.email
+    })
 
-class RegisterResource(Resource):
-    def post(self):
-        data = request.get_json()
-        username = data.get('username')
-        password = data.get('password')
-
-        if username in users:
-            return jsonify(message='Username already exists'), 400
-
-        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-        users[username] = {'password_hash': hashed_password}
-
-        return jsonify(message='User registered'), 201
-
-class LoginResource(Resource):
-    def post(self):
-        data = request.get_json()
-        username = data.get('username')
-        password = data.get('password')
-
-        if username not in users:
-            return jsonify(message='User not found'), 404
-
-        hashed_password = users[username]['password_hash']
-
-        if bcrypt.check_password_hash(hashed_password, password):
-            return jsonify(message='Login successful'), 200
-        else:
-            return jsonify(message='Login failed'), 401
-
-api.add_resource(RegisterResource, '/register')
-api.add_resource(LoginResource, '/login')
+if __name__ == '__main__':
+    app.run(debug=True)
