@@ -1,5 +1,11 @@
-from . import db
 from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
+from uuid import uuid4
+
+db = SQLAlchemy()
+
+def get_uuid():
+    return uuid4().hex
 
 # cart items
 class Product(db.Model):

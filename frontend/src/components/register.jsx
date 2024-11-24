@@ -3,23 +3,28 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
     const registerUser = () => {
       axios.post('http://127.0.0.1:5000/signup', {
-          email: email,
-          password: password
+        name: name,
+        email: email,
+        password: password
       })
       .then(function (response) {
            console.log(response);
-          navigate("/");
+          navigate("/login");
       })
       .catch(function (error) {
           console.log(error, 'error');
           if (error.response.status === 401) {
               alert("Invalid credentials");
+          }
+          else { 
+            alert("An error occurred.Please try again.")
           }
       });
     };
@@ -31,7 +36,7 @@ const RegisterForm = () => {
 
             <form action="#">
                 <div class="input-box">
-                  <input type="text" placeholder="Enter your name" required></input>
+                  <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter your name" required></input>
                 </div>
 
                 <div class="input-box">
@@ -40,10 +45,6 @@ const RegisterForm = () => {
 
                 <div class="input-box">
                   <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Create password" required></input>
-                </div>
-
-                <div class="input-box">
-                  <input type="password" placeholder="Confirm password" required></input>
                 </div>
 
                 <div class="policy">
