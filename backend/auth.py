@@ -44,7 +44,7 @@ class auth():
         db.session.add(new_user)
         db.session.commit()
 
-        session["user_id"] = new_user.id
+        session["user_id"] = new_user.id        
 
         return jsonify({
             "id": new_user.id,
