@@ -4,6 +4,7 @@ import Footer from "./components/footer.jsx";
 import LoginForm from "./components/login.jsx";
 import RegisterForm from "./components/register.jsx";
 import ProductPage from "./components/productpage.jsx" 
+import About from "./components/about.jsx"
 import CartPage from "./components/cartpage.jsx";
 import { useState } from 'react'
 import {
@@ -24,7 +25,9 @@ function App() {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/product-page" element={<ProductPage />} />
+          <Route path="/about" element={<About />} />
           <Route exact path="/" element={<><Products/><Footer/></>}/>
+          
       </Routes>
     </Router>
 

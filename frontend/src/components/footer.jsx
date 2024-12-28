@@ -3,7 +3,7 @@ function Footer() {
         <footer className="footer-distributed">
                 <div class="footer-left">
 
-                    <h3>DECOR<span>ands</span></h3>
+                    <h3>DECOR<span>art</span></h3>
                     <p class="footer-links">
                         <a href="#" class="link-1">Home</a>
                         <a href="#">Categories</a>
