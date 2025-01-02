@@ -38,7 +38,7 @@ class auth():
 
         if user_exists:
             return jsonify({"error": "Email already exists"}), 409
-
+     
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         new_user = User(username=name, email=email, password=hashed_password)
         db.session.add(new_user)

@@ -9,7 +9,7 @@ body {
 header{
   background: url('assets/deco-white.jpg');
   height: 300px;
-  background-position: 135px;
+  background-position: 315px;
 }
 
 nav  {
@@ -358,7 +358,36 @@ form .signup-link a:hover{
 
     /* about */
 
-/* centering */
+.sec-about {
+  padding: 40px 0px 40px 0px ;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #2121216b;
+}
+.about {
+  display: flex;
+  flex-direction: row;
+  background-color: #0000007d;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 70%;
+  width: 100%;
+  overflow: hidden;
+}
+.about div {
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+}
+.about-img {
+  width: 50%;
+  object-fit: cover;
+  border-radius: 8px;
+  border-right: 1px solid #eee;
+}
 
 
     /* FOOTER */    

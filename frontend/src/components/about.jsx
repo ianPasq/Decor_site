@@ -2,6 +2,9 @@ function About() {
     return (
         <section className="sec-about">
             <div className="about">
+            <div className="intro-about">
+
+                <img className="about-img" src= './assets/dark-wood.jpg' alt="" />
                 <p className="p1">Get To Know More</p>
                 <h2 className="title">About</h2>
                 <h4>
@@ -12,6 +15,7 @@ function About() {
                     Eligendi illum libero dolorum cum laboriosam corrupti quidem,
                     reiciendis ea magnam? Nulla, impedit fuga!
                 </h4>
+
             </div>
 
             <div className="show">
@@ -21,6 +25,7 @@ function About() {
                 <div>
                     2box
                 </div>
+            </div>
             </div>
         </section>
     )
