@@ -26,7 +26,7 @@ class auth():
     def page():
         return 'hello this week'
 
-    @app.route('/sign_up', methods=["POST"])
+    @app.route('/sign_up', methods=["POST", "GET"])
     def signup():
         data = request.json
         name = data.get("name")

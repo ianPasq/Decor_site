@@ -9,13 +9,13 @@ const RegisterForm = () => {
     const navigate = useNavigate();
 
     const registerUser = () => {
-      axios.post('http://127.0.0.1:5000/signup', {
+      axios.post('http://127.0.0.1:3000/sign_up', {
         name: name,
         email: email,
         password: password
       })
       .then(function (response) {
-           console.log(response);
+          console.log(response);
           navigate("/login");
       })
       .catch(function (error) {
@@ -45,11 +45,6 @@ const RegisterForm = () => {
 
                 <div class="input-box">
                   <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Create password" required></input>
-                </div>
-
-                <div class="policy">
-                  <input type="checkbox"></input>
-                  <h3>I accept all terms & condition</h3>
                 </div>
 
                 <div class="input-box button">

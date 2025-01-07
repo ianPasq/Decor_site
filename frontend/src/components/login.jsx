@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom"
 
@@ -17,7 +17,7 @@ const LoginForm = () => {
         alert("password was left Blank!");
       }
       else{
-          axios.post('http://127.0.0.1:5000/login', {
+          axios.post('http://127.0.0.1:3000/login', {
               email: email,
               password: password
           })
@@ -30,6 +30,7 @@ const LoginForm = () => {
               console.log(error, 'error');
               if (error.response.status === 401) {
                   alert("Invalid credentials");
+
               }
       });
     }
