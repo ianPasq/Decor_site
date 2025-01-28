@@ -21,10 +21,6 @@ with app.app_context():
     db.create_all()
 
 class auth():
-    
-    @app.route('/pages', methods=["POST", "GET"])
-    def page():
-        return 'hello this week'
 
     @app.route('/sign_up', methods=["POST", "GET"])
     def signup():

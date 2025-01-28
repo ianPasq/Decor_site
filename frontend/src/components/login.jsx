@@ -9,7 +9,7 @@ const LoginForm = () => {
 
   const navigate = useNavigate();
      
-  const logInUser = () => {
+  const handleLogin = () => {
       if(email.length === 0){
         alert("Email was left Blank!");
       }
@@ -63,7 +63,7 @@ const LoginForm = () => {
 
         <div class="pass"><a href="#">Forgot password?</a></div>
           <div class="row button">
-            <input type="button" onClick={logInUser} value="Login"></input>
+            <input type="button" onClick={handleLogin} value="Login"></input>
           </div>
           <div class="signup-link">Not registered? <a href="/register">Register now!</a></div>
       </form>

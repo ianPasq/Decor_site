@@ -1,10 +1,9 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from . import create_app, db
-from models import Order, OrderItem, Product
+from app import app
+from models import Order, OrderItem, Product, db
 from datetime import datetime
 
-app = create_app('development')
 CORS(app)
 
 @app.route('/add_cart', methods=['PUT'])
@@ -112,3 +111,10 @@ def edit_cart():
     db.session.commit()
     
     return jsonify({'message': 'Cart updated successfully'}), 200
+
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=3000, debug=True)
+    with app.app_context():
+        db.create_all()
