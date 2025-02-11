@@ -5,23 +5,24 @@ const CartPage = () => {
   const [cartContents, setCartContents] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
-  useEffect(() => {
-    fetchCart();
-  }, []);
 
   const fetchCart = async () => {
     try {
-      const response = await axios.get('/view_cart', {
-        params: {
-          user_id: 1, 
-        },
-      });
-      setCartContents(response.data.cart_contents);
+      const response = await fetch.get('/view_cart?user_id=1');
+      if (!response.ok) {
+        throw new Error('failed to fetch cart');
+      }
+      const data = await response.json();
+      setCartContents(data.cart_contents);
     } catch (error) {
       console.error('Error:', error);
       setErrorMessage('Failed to fetch cart contents. Please try again later.');
     }
   };
+
+  useEffect(() => {
+    fetchCart();
+  },[]);
 
   const handleDeleteItem = async (productId) => {
     try {

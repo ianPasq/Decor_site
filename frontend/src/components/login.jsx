@@ -4,37 +4,44 @@ import { useNavigate } from "react-router-dom"
 
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate();
-     
-  const handleLogin = () => {
-      if(email.length === 0){
-        alert("Email was left Blank!");
-      }
-      else if(password.length === 0){
-        alert("password was left Blank!");
-      }
-      else{
-          axios.post('http://127.0.0.1:3000/login', {
-              email: email,
-              password: password
-          })
-          .then(function (response) {
-              console.log(response);
-              //console.log(response.data);
-              navigate("/");
-          })
-          .catch(function (error) {
-              console.log(error, 'error');
-              if (error.response.status === 401) {
-                  alert("Invalid credentials");
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-              }
-      });
+    if (email.trim() === '' || password.trim() === '') {
+      alert('Email and Password cannot be empty!');
+      return;
     }
-  }
+
+    setLoading(true);
+
+    try {
+      const response = await axios.post('http://127.0.0.1:3000/login', {
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        const { token } = response.data;
+        localStorage.setItem('authToken', token); // Store token for authentication
+        alert('Login successful!');
+        window.location.href = '/'; // Redirect to home page after login
+      }
+    } catch (error) {
+      console.error(error);
+      if (error.response && error.response.status === 401) {
+        alert('Invalid credentials. Please try again.');
+      } else {
+        alert('An error occurred while logging in.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  }; 
+   
 
   return (
     <div className='login-form'>

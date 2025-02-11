@@ -24,11 +24,15 @@ function NavBar() {
         <nav>
         {isAuthenticated ? (
           <>
+            <div className="nav-btn">
+               <a className="active" href="/">Home</a>
+               <a href="/about">About</a>
+               <a href='#category'>Categories</a>
+          </div>
            <div>
-
                <a className="user-btn" href="/profile"> Profile </a>
                <a className="user-btn" href="/cart"> Cart  </a>
-
+               <a onClick={handleLogout} > Logout </a>
             </div>
           </>
         ) : (

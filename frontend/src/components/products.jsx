@@ -99,6 +99,7 @@ function Products() {
                         <button className="check" onClick={()=>navigate('/product-page', { state: { product }})}>
                             Check
                         </button>
+                        
                     </div>
                 ))}
 
