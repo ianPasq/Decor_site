@@ -49,7 +49,7 @@ def add_to_cart(cart, product, quantity):
 @app.route('/delete_cart', methods=['DELETE'])
 def delete_cart():
     data = request.json
-    user_id = data.get(user_id)
+    user_id = data.get('user_id')
     product_id = data.get('product_id')
     
     cart = Order.query.filter_by(user_id=user_id).first()
