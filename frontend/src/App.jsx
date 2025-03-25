@@ -8,11 +8,7 @@ import ProductPage from "./components/productpage.jsx"
 import About from "./components/about.jsx"
 import CartPage from "./components/cartpage.jsx";
 import Profile from "./components/account.jsx"
-import {
-          BrowserRouter as Router,
-          Routes,
-          Route,
-       } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, } from "react-router-dom";
 import './App.css'
 
 
@@ -21,7 +17,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("authToken")); 
   
   const handleLogin = (token) => {
-    loacalStorage.setItem("authToken", token);
+    localStorage.setItem("authToken", token);
     setIsAuthenticated(true);
   };
 
@@ -33,6 +29,7 @@ function App() {
   return (
     <>
     <Router>
+
       <NavBar isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
 
       <Routes>
@@ -52,6 +49,7 @@ function App() {
           <Route exact path="/" element={<><Products/><Footer/></>}/>
           
       </Routes>
+
     </Router>
 
       

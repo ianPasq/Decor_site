@@ -7,11 +7,15 @@ const CartPage = () => {
 
     const fetchCart = async () => {
         try {
-            const response = await axios.get('/view_cart', { params: { user_id: 1 } });
-            setCartContents(response.data.cart_contents);
+            const response = await axios.get('/view_cart', { 
+                params: { user_id: 1 } 
+            });
+            
+            setCartContents(response.data?.cart_contents || []);
         } catch (error) {
             console.error('Error:', error);
             setErrorMessage('Failed to fetch cart contents. Please try again later.');
+            setCartContents([]); 
         }
     };
 
@@ -27,7 +31,7 @@ const CartPage = () => {
                     product_id: productId,
                 },
             });
-            await fetchCart(); // Refresh the cart after deletion
+            await fetchCart(); 
         } catch (error) {
             console.error('Error:', error);
             setErrorMessage('Failed to delete item from cart. Please try again later.');
@@ -38,16 +42,23 @@ const CartPage = () => {
         <div>
             <h2>Cart</h2>
             {errorMessage && <div className="error">{errorMessage}</div>}
-            <ul>
-                {cartContents.map((item) => (
-                    <li key={item.product_id}>
-                        <div>{item.name}</div>
-                        <div>Quantity: {item.quantity}</div>
-                        <div>Price: ${item.price}</div>
-                        <button onClick={() => handleDeleteItem(item.product_id)}>Remove</button>
-                    </li>
-                ))}
-            </ul>
+            
+            {cartContents?.length > 0 ? (
+                <ul>
+                    {cartContents.map((item) => (
+                        <li key={item.product_id}>
+                            <div>{item.name}</div>
+                            <div>Quantity: {item.quantity}</div>
+                            <div>Price: ${item.price}</div>
+                            <button onClick={() => handleDeleteItem(item.product_id)}>
+                                Remove
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>Your cart is empty</p>
+            )}
         </div>
     );
 };

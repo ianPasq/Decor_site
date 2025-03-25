@@ -26,9 +26,9 @@ const LoginForm = () => {
 
       if (response.status === 200) {
         const { token } = response.data;
-        localStorage.setItem('authToken', token); // Store token for authentication
+        localStorage.setItem('authToken', token); 
         alert('Login successful!');
-        window.location.href = '/'; // Redirect to home page after login
+        window.location.href = '/'; 
       }
     } catch (error) {
       console.error(error);
