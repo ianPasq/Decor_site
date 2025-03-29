@@ -353,6 +353,26 @@ form .signup-link a:hover{
   color: #eaeaea;
   margin-top: 40px;
 }
+.success-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #4CAF50;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  animation: slideIn 0.5s, fadeOut 0.5s 1.5s;
+}
+
+@keyframes slideIn {
+  from { right: -300px; }
+  to { right: 20px; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
 
 
 

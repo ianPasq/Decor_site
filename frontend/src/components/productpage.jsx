@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 function ProductPage() {
     const location = useLocation();
     const { product } = location.state || {};
+    const [showSuccess, setShowSuccess] = useState(false);
     
     const handleAddToCart = async () => {
         try {
@@ -13,12 +14,18 @@ function ProductPage() {
                 product_id: product.id,
                 quantity: 1,
             });
+            
             if (response.status === 200) {
-                alert('Product added to cart!');
+                setShowSuccess(true);
+                setTimeout(() => setShowSuccess(false), 2000); 
+
+                axios.get('/view_cart', { params: { user_id: 1 }})
+                .then(res => setCartContents(res.data.cart_contents))
+                .catch(console.error);
             }
         } catch (error) {
             console.error('Error adding to cart:', error);
-            alert('Failed to add product to cart.');
+            alert(`Failed to add product: ${error.response?.data?.message || 'Server error'}`);
         }
     };
 
@@ -28,6 +35,12 @@ function ProductPage() {
 
     return (
         <section className="pro-page">
+            {showSuccess && (
+                <div className="success-message">
+                    ✓ Added to cart!
+                </div>
+            )}
+            
             <div className="prods">
                 <img className="pro-img" src={product.img} alt="" />
                 <div>
