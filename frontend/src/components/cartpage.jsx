@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const CartPage = () => {
+    axios.defaults.baseURL = 'http://localhost:3000';
     const [cartContents, setCartContents] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -43,22 +44,24 @@ const CartPage = () => {
             <h2>Cart</h2>
             {errorMessage && <div className="error">{errorMessage}</div>}
             
-            {cartContents?.length > 0 ? (
-                <ul>
-                    {cartContents.map((item) => (
-                        <li key={item.product_id}>
-                            <div>{item.name}</div>
-                            <div>Quantity: {item.quantity}</div>
-                            <div>Price: ${item.price}</div>
-                            <button onClick={() => handleDeleteItem(item.product_id)}>
-                                Remove
-                            </button>
-                        </li>
-                    ))}
-                </ul>
+            {cartContents.map((item) => (
+                <li key={item.product_id}>
+                    <img 
+                        src={item.img} 
+                        alt={item.name} 
+                        style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                    />
+                    <div>{item.name}</div>
+                    <div>Quantity: {item.quantity}</div>
+                    <div>Price: ${item.price}</div>
+                    <button onClick={() => handleDeleteItem(item.product_id)}>
+                        Remove
+                    </button>
+                </li>
+            ))}
             ) : (
                 <p>Your cart is empty</p>
-            )}
+            )
         </div>
     );
 };

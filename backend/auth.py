@@ -1,28 +1,27 @@
 from flask import Flask, Blueprint, request, jsonify, session
-from models import db, User
-from app import app
+from app import create_app, db
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS, cross_origin
 from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
+auth_bp = Blueprint('auth', __name__)
  
-app.config['SECRET_KEY'] = 'bearsykerr'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flaskdb.db'
+auth_bp.config['SECRET_KEY'] = 'bearsykerr'
+auth_bp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///flaskdb.db'
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_ECHO = True
   
-bcrypt = Bcrypt(app) 
-CORS(app, supports_credentials=True)
-db.init_app(app)
+bcrypt = Bcrypt(auth_bp) 
+CORS(auth_bp, supports_credentials=True)
+db.init_app(auth_bp)
   
-with app.app_context():
+with auth_bp.app_context():
     db.create_all()
 
 class auth():
 
-    @app.route('/sign_up', methods=["POST", "GET"])
+    @auth_bp.route('/sign_up', methods=["POST", "GET"])
     def signup():
         data = request.json
         name = data.get("name")
@@ -48,7 +47,7 @@ class auth():
             "email": new_user.email
         })
 
-    @app.route('/login', methods=["POST"])
+    @auth_bp.route('/login', methods=["POST"])
     def login_user():
         data = request.json
         email = data.get("email")

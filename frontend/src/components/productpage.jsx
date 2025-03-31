@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 function ProductPage() {
+    axios.defaults.baseURL = 'http://localhost:3000';
     const location = useLocation();
     const { product } = location.state || {};
     const [showSuccess, setShowSuccess] = useState(false);
@@ -44,7 +45,7 @@ function ProductPage() {
             <div className="prods">
                 <img className="pro-img" src={product.img} alt="" />
                 <div>
-                    <h2 className="pro-title">{product.title}</h2>
+                    <h2 className="pro-title">{product.name}</h2>
                     <h2 className="pro-category">{product.category}</h2>
                     <h2 className="pro-descr">{product.description}</h2>
                     <button className="check" onClick={handleAddToCart}>

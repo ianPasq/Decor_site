@@ -1,12 +1,12 @@
-from flask import Flask, jsonify, request
-from flask_cors import CORS
-from app import app
-from models import Order, OrderItem, Product, db
+from flask import Blueprint, jsonify, request
 from datetime import datetime
+from app import db
+from models import Product, Order, OrderItem
 
-CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
 
-@app.route('/add_cart', methods=['PUT'])
+cart_bp = Blueprint('cart', __name__)
+
+@cart_bp.route('/add_cart', methods=['PUT'])
 def add_cart():
     try:
         app.logger.info("Received add_cart request: %s", request.json)
@@ -71,7 +71,7 @@ def add_to_cart(cart, product, quantity):
     
     
 
-@app.route('/delete_cart', methods=['DELETE'])
+@cart_bp.route('/delete_cart', methods=['DELETE'])
 def delete_cart():
     data = request.json
     user_id = data.get('user_id')
@@ -90,7 +90,7 @@ def delete_cart():
     
     return jsonify({'message': 'Product deleted from cart successfully'}), 200
 
-@app.route('/debug_products')
+@cart_bp.route('/debug_products')
 def debug_products():
     products = Product.query.all()
     return jsonify([{
@@ -100,62 +100,71 @@ def debug_products():
         'category': p.category
     } for p in products])
 
-@app.route('/seed_products', methods=['POST'])
+@cart_bp.route('/seed_products', methods=['POST'])
 def seed_products():
     products = [
         {
             "id": 1,
             "category": "Furniture",
             "name": "Comfortable Dark Gray Chair and Table",
-            "price": 1000.00
+            "price": 1000.00,
+            "img": "./assets/comfort-chair-and-table.avif"
         },
         {
             "id": 2,
             "category": "Furniture",
             "name": "Fancy Black and Gold Metal Chair and Glass Table",
             "price": 1500.00,
+            "img": "./assets/fancy-chair-and-table.avif"
         },
         {
             "id": 3,
             "category": "Furniture",
             "name": "Wide Comfortable Gray Living Room Chair",
             "price": 300.00,
+            "img": "./assets/living-room-chair.avif"
         },
         {
             "id": 4,
             "category": "Furniture",
             "name": "Minimalistic Wooden Chair and Table",
             "price": 1200.00,
+            "img": "assets/minimalistic-chair-and-table-wood.avif"
         },
         {
             "id": 5,
             "category": "Furniture",
             "name": "Lether Office Chair",
             "price": 1200.00,
+            "img": "assets/lether-office-chair.avif"
         },
         {
             "id": 6,
             "category": "Furniture",
             "name": "Minimal Black Metal and Wood Chair",
             "price": 1200.00,
+            "img": "assets/minimalistic-metal-and-wood-chair.avif"
         },
         {
             "id": 7,
             "category": "Furniture",
             "name": "Simple White Chair",
             "price": 1200.00,
+            "img": "assets/white-simple-chair.avif"
         },
         {
             "id": 8,
             "category": "Furniture",
             "name": "Simple Small White Wooden bedside Table",
             "price": 1200.00,
+            "img": "assets/white-wooden-bed-table.avif"
         },
         {
             "id": 9,
             "category": "Furniture",
             "name": "Alternative Minimal and Comfortable Yellow Chair",
             "price": 1500.00,
+            "img": "assets/yellow-chair.avif"
         }
     ]
     
@@ -164,14 +173,15 @@ def seed_products():
             id=prod['id'],
             name=prod['name'],
             price=prod['price'],
-            category=prod['category']
+            category=prod['category'],
+            img=prod['img']
         )
         db.session.add(product)
     
     db.session.commit()
     return jsonify({'message': 'Products seeded successfully'}), 200
 
-@app.route('/view_cart', methods=['GET'])
+@cart_bp.route('/view_cart', methods=['GET'])
 def view_cart():
     user_id = request.args.get('user_id')
     
@@ -188,13 +198,14 @@ def view_cart():
             'product_id': item.product_id,
             'name': product.name,
             'quantity': item.quantity,
-            'price': item.price
+            'price': item.price,
+            'img': product.img
         })
     
     return jsonify({'cart_contents': cart_contents}), 200
     
 
-@app.route('/edit_cart', methods=["PUT"])
+@cart_bp.route('/edit_cart', methods=["PUT"])
 def edit_cart():
     data = request.json
     user_id = data.get('user_id')
@@ -221,5 +232,3 @@ def edit_cart():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=3000, debug=True)
-    with app.app_context():
-        db.create_all()
