@@ -19,7 +19,7 @@ const LoginForm = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://127.0.0.1:3000/login', {
+      const response = await axios.post('http://127.0.0.1:6000/login', {
         email,
         password,
       });

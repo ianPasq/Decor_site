@@ -9,7 +9,7 @@ const RegisterForm = () => {
     const navigate = useNavigate();
 
     const registerUser = () => {
-      axios.post('http://127.0.0.1:3000/sign_up', {
+      axios.post('http://127.0.0.1:6000/signup', {
         name: name,
         email: email,
         password: password

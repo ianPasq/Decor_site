@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 function ProductPage() {
-    axios.defaults.baseURL = 'http://localhost:3000';
+    axios.defaults.baseURL = 'http://localhost:6000';
     const location = useLocation();
     const { product } = location.state || {};
     const [showSuccess, setShowSuccess] = useState(false);
