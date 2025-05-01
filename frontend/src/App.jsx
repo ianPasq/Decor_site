@@ -4,8 +4,7 @@ import Products from "./components/products.jsx";
 import Footer from "./components/footer.jsx";
 import LoginForm from "./components/login.jsx";
 import RegisterForm from "./components/register.jsx";
-import ProductPage from "./components/productpage.jsx" 
-import About from "./components/about.jsx"
+import ProductPage from "./components/productpage.jsx";
 import CartPage from "./components/cartpage.jsx";
 import Profile from "./components/account.jsx"
 import { BrowserRouter as Router, Routes, Route, } from "react-router-dom";
@@ -43,8 +42,6 @@ function App() {
           <Route path="/cart" element={isAuthenticated ? <CartPage /> : <LoginForm />} />
 
           <Route path="/product-page" element={<ProductPage />} />
-
-          <Route path="/about" element={<About />} />
 
           <Route exact path="/" element={<><Products/><Footer/></>}/>
           

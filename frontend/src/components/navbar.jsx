@@ -26,7 +26,6 @@ function NavBar() {
           <>
             <div className="nav-btn">
                <a className="active" href="/">Home</a>
-               <a href="/about">About</a>
                <a href='#category'>Categories</a>
           </div>
            <div>
@@ -39,7 +38,6 @@ function NavBar() {
           <>
             <div className="nav-btn">
                 <a className="active" href="/">Home</a>
-                <a href="/about">About</a>
                 <a href="#category">Categories</a>
             </div>
 

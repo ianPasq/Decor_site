@@ -48,7 +48,7 @@ function ProductPage() {
                     <h2 className="pro-title">{product.name}</h2>
                     <h2 className="pro-category">{product.category}</h2>
                     <h2 className="pro-descr">{product.description}</h2>
-                    <button className="check" onClick={handleAddToCart}>
+                    <button className="add-to" onClick={handleAddToCart}>
                         Add to Cart
                     </button>
                 </div>
