@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, session
+from flask import Blueprint, request, jsonify, session, current_app
 from models import User
 from app import db, bcrypt
 
@@ -33,7 +33,8 @@ def signup():
 
     except Exception as e:
         db.session.rollback()
-        return jsonify({"error": str(e)}), 500
+        current_app.logger.error(f"Signup error: {e}")
+        return jsonify({"error": "Server error during signup"}), 500
 
 @auth_bp.route('/login', methods=["POST"])
 def login():
@@ -43,19 +44,18 @@ def login():
         password = data.get("password")
 
         user = User.query.filter_by(email=email).first()
-
         if not user or not bcrypt.check_password_hash(user.password, password):
             return jsonify({"error": "Invalid credentials"}), 401
 
         session["user_id"] = user.id
-
         return jsonify({
             "id": user.id,
             "name": user.username,
             "email": user.email
-        })
+        }), 200
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        current_app.logger.error(f"Login error: {e}")
+        return jsonify({"error": "Server error during login"}), 500
 
     

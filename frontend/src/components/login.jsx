@@ -3,44 +3,33 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom"
 
 
-const LoginForm = () => {
-  const [email, setEmail] = useState('');
+function LoginForm() {
+  const [email, setEmail]       = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async e => {
     e.preventDefault();
-
-    if (email.trim() === '' || password.trim() === '') {
-      alert('Email and Password cannot be empty!');
-      return;
+    if (!email || !password) {
+      return alert('Email and password required');
     }
-
-    setLoading(true);
 
     try {
-      const response = await axios.post('http://127.0.0.1:6000/login', {
-        email,
-        password,
-      });
+      await axios.post('/login', { email, password });
+      alert('Login successful!');
+      navigate('/');
+    } catch (err) {
+      console.error(err);
+      const status = err.response?.status;
+      const msg    = err.response?.data?.error || err.message;
 
-      if (response.status === 200) {
-        const { token } = response.data;
-        localStorage.setItem('authToken', token); 
-        alert('Login successful!');
-        window.location.href = '/'; 
-      }
-    } catch (error) {
-      console.error(error);
-      if (error.response && error.response.status === 401) {
-        alert('Invalid credentials. Please try again.');
+      if (status === 401) {
+        alert('Invalid credentials');
       } else {
-        alert('An error occurred while logging in.');
+        alert(`Login failed: ${msg}`);
       }
-    } finally {
-      setLoading(false);
     }
-  }; 
+  };
    
 
   return (

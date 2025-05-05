@@ -2,32 +2,33 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const RegisterForm = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+function RegisterForm() {
+  const [name, setName]         = useState('');
+  const [email, setEmail]       = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-    const registerUser = () => {
-      axios.post('http://127.0.0.1:6000/signup', {
-        name: name,
-        email: email,
-        password: password
-      })
-      .then(function (response) {
-          console.log(response);
-          navigate("/login");
-      })
-      .catch(function (error) {
-          console.log(error, 'error');
-          if (error.response.status === 401) {
-              alert("Invalid credentials");
-          }
-          else { 
-            alert("An error occurred.Please try again.")
-          }
-      });
-    };
+  const registerUser = async () => {
+    try {
+      const res = await axios.post('/signup', { name, email, password });
+      alert('Registration successful!');
+      navigate('/login');
+    } catch (err) {
+      console.error(err);
+      const status = err.response?.status;
+      const msg    = err.response?.data?.error || err.message;
+
+      if (status === 400) {
+        alert(`Missing fields: ${msg}`);
+      }
+      else if (status === 409) {
+        alert('Email already exists');
+      }
+      else {
+        alert(`Signup failed: ${msg}`);
+      }
+    }
+  };
 
     return (
       <div className='regis-section'>

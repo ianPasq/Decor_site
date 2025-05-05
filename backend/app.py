@@ -13,6 +13,9 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'bsyke'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///app.db'
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'lax'
+    SESSION_COOKIE_SECURE = False
    
 
 
